@@ -15,25 +15,25 @@ phases:
         - aws --version
         # Login to ECR Registry for docker to push the image to ECR Repository
         - echo "Login in to Amazon ECR..."
-        - $(aws ecr get-login --no-include-email --region us-east-1)
+        - $(aws ecr get-login --no-include-email --region us-east-2)
         # Update Kube config Home Directory
         - export KUBECONFIG=$HOME/.kube/config
   build:
     commands:
       # Build Docker Image
-      - echo "Build started on `date`"
+      - echo "Build started on 'date'"
       - echo "Building the Docker image..."
       - docker build --tag $REPOSITORY_URI:$TAG .
   post_build:
     commands:
       # Push Docker Image to ECR Repository
-      - echo "Build completed on `date`"
+      - echo "Build completed on 'date'"
       - echo "Pushing the Docker image to ECR Repository"
       - docker push $REPOSITORY_URI:$TAG
       - echo "Docker Image Push to ECR Completed -  $REPOSITORY_URI:$TAG"    
       # Extracting AWS Credential Information using STS Assume Role for kubectl
       - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"          
-      - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
+      - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name cicd --duration-seconds 900)
       - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
       - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
@@ -43,10 +43,10 @@ phases:
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       # Apply changes to our Application using kubectl
       - echo "Apply changes to kube manifests"            
-      - kubectl apply -f kube-manifests/
+      - kubectl apply -f YAML/
       - echo "Completed applying changes to Kubernetes Objects"           
       # Create Artifacts which we can use if we want to continue our pipeline for other stages
-      - printf '[{"name":"01-DEVOPS-Nginx-Deployment.yml","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
+      - printf '[{"name":"deployment.yml","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
       # Additional Commands to view your credentials      
       #- echo "Credentials Value is..  ${CREDENTIALS}"      
       #- echo "AWS_ACCESS_KEY_ID...  ${AWS_ACCESS_KEY_ID}"            
@@ -57,4 +57,4 @@ phases:
 artifacts:
   files: 
     - build.json   
-    - kube-manifests/*
+    - YAML/*
