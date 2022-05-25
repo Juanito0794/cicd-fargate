@@ -3,7 +3,7 @@ run-as: root
 phases:
   install:
     commands:
-      - echo "Installing app dependencies..."
+      - echo "Installing app dependencies.... version 1"
   pre_build:
     commands:
       - echo "Logging in to Amazon EKS...."
