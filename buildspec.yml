@@ -28,13 +28,11 @@ phases:
       - echo "Build completed on `date`"
       - echo "Pushing the Docker image to ECR Repository"
       - docker push $REPOSITORY_URI:$TAG
-      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_URI:$TAG"    
-      # Extracting AWS Credential Information using STS Assume Role for kubectl
-      - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"          
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_URI:$TAG"          
       # Setup kubectl with our EKS Cluster              
       - echo "Update Kube Config"      
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       # Apply changes to our Application using kubectl
       - echo "Apply changes to kube manifests"            
-      - kubectl apply -f kube-manifests/
+      - kubectl apply -f YAML/
       - echo "Completed applying changes to Kubernetes Objects"  
