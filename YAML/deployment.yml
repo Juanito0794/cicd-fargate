@@ -15,7 +15,7 @@ spec:
         app:  clase3
     spec:
       containers:
-      - name: hola-aws101
-        image: CONTAINER_IMAGE
-        ports:
-        - containerPort: 80
+        - name: hola-aws101
+          image: CONTAINER_IMAGE
+          ports:
+            - containerPort: 80
