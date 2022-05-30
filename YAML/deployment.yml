@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  clase3
+  labels:
+    app:  clase3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clase3
+  template:
+    metadata:
+      labels:
+        app:  clase3
+    spec:
+      containers:
+        - name: clase3
+          image: 687256633140.dkr.ecr.us-east-2.amazonaws.com/juan:latest2
+          ports:
+          - containerPort: 80
