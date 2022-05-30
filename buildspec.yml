@@ -9,7 +9,7 @@ phases:
         - TAG="$(date +%Y-%m-%d.%H.%M.%S).$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
         # Update Image tag in our Kubernetes Deployment Manifest        
         - echo "Update Image tag in kube-manifest..."
-        - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' YAML/deployment.yml
+        - sed -i '/CONTAINER_IMAGE/"$REPOSITORY_URI":"$TAG"/g' YAML/deployment.yml
         # Login to ECR Registry for docker to push the image to ECR Repository
         - echo "Login in to Amazon ECR..."
         - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 687256633140.dkr.ecr.us-east-2.amazonaws.com
@@ -29,14 +29,7 @@ phases:
       - echo "Build completed on 'date'"
       - echo "Pushing the Docker image to ECR Repository"
       - docker push $REPOSITORY_URI:$TAG
-      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_URI:$TAG" 
-      # Extracting AWS Credential Information using STS Assume Role for kubectl
-      - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"          
-      - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
-      - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
-      - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
-      - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
-      - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_URI:$TAG"
       # Setup kubectl with our EKS Cluster              
       - echo "Update Kube Config"      
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
