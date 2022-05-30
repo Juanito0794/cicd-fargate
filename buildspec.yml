@@ -9,7 +9,7 @@ phases:
         - TAG="$(date +%Y-%m-%d.%H.%M.%S).$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
         # Update Image tag in our Kubernetes Deployment Manifest        
         - echo "Update Image tag in kube-manifest..."
-        - sed -i 's/CONTAINER_IMAGE/"$REPOSITORY_URI":"$TAG"' YAML/deployment.yml
+        - sed -i 's/CONTAINER_IMAGE/"$REPOSITORY_URI":"$TAG"/g' YAML/deployment.yml
         # Login to ECR Registry for docker to push the image to ECR Repository
         - echo "Login in to Amazon ECR..."
         - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 687256633140.dkr.ecr.us-east-2.amazonaws.com
