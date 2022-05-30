@@ -18,4 +18,4 @@ spec:
         - name: hola-aws101
           image: CONTAINER_IMAGE
           ports:
-            - containerPort: 80
+          - containerPort: 80
