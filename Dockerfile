@@ -1,3 +1,3 @@
-FROM 687256633140.dkr.ecr.us-east-2.amazonaws.com/juan:latest2
+FROM 687256633140.dkr.ecr.us-east-2.amazonaws.com/nginx:latest
 WORKDIR /html
 COPY /html/index.html /usr/share/nginx/html
