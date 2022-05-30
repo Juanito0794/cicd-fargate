@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: clase3
-          image: "$REPOSITORY_URI":"$TAG"
+          image: CONTAINER_IMAGE
           ports:
           - containerPort: 80
