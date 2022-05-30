@@ -21,13 +21,12 @@ phases:
       # Build Docker Image
       - echo "Build started on 'date'"
       - echo "Building the Docker image..."
-      - docker build -t juan:$TAG .
+      - docker build --tag $REPOSITORY_URI:$TAG .
   post_build:
     commands:
       # Push Docker Image to ECR Repository
       - echo "Build completed on 'date'"
       - echo "Pushing the Docker image to ECR Repository"
-      - docker tag juan:$TAG $REPOSITORY_URI:$TAG
       - docker push $REPOSITORY_URI:$TAG
       - echo "Docker Image Push to ECR Completed -  $REPOSITORY_URI:$TAG"          
       # Setup kubectl with our EKS Cluster              
