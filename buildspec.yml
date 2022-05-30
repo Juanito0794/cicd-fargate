@@ -21,7 +21,7 @@ phases:
       # Build Docker Image
       - echo "Build started on 'date'"
       - echo "Building the Docker image..."
-      - docker image build --tag "$REPOSITORY_URI":"$TAG" -f Dockerfile .
+      - docker image build --tag "$REPOSITORY_URI":"$TAG" -f ./Dockerfile
   post_build:
     commands:
       # Push Docker Image to ECR Repository
