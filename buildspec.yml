@@ -21,18 +21,18 @@ phases:
       # Build Docker Image
       - echo "Build started on 'date'"
       - echo "Building the Docker image..."
-      - docker image build --tag "$REPOSITORY_URI":"$TAG" -f ./Dockerfile .
+      - docker build --tag "$REPOSITORY_URI":"$TAG" .
   post_build:
     commands:
       # Push Docker Image to ECR Repository
       - echo "Build completed on 'date'"
       - echo "Pushing the Docker image to ECR Repository"
-      - docker image push "$REPOSITORY_URI":"$TAG"
+      - docker push "$REPOSITORY_URI":"$TAG"
       - echo "Docker Image Push to ECR Completed -  $REPOSITORY_URI:$TAG"          
       # Setup kubectl with our EKS Cluster              
       - echo "Update Kube Config"      
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       # Apply changes to our Application using kubectl
       - echo "Apply changes to kube manifests"            
-      - kubectl apply -f YAML/
+      - kubectl apply -f YAML/deployment.yml
       - echo "Completed applying changes to Kubernetes Objects"  
