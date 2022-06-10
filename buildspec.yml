@@ -12,8 +12,8 @@ phases:
         - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' YAML/deployment.yml
         # Login to ECR Registry for docker to push the image to ECR Repository
         - echo "Login in to Amazon ECR..."
-        #- aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 687256633140.dkr.ecr.us-east-2.amazonaws.com
-        - $(aws ecr get-login --no-include-email --region us-east-2)
+        - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 687256633140.dkr.ecr.us-east-2.amazonaws.com
+        #- $(aws ecr get-login --no-include-email --region us-east-2)
         # Update Kube config Home Directory
         - export KUBECONFIG=$HOME/.kube/config
         - export path=/home/ec2-user/.kube/config
