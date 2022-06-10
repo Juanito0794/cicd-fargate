@@ -11,7 +11,7 @@ phases:
         - echo "Update Image tag in kube-manifest..."
         - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' YAML/deployment.yml
         # Verify AWS CLI Version        
-        - echo "Verify AWS CLI Version..."
+        #- echo "Verify AWS CLI Version..."
         - aws --version
         # Login to ECR Registry for docker to push the image to ECR Repository
         - echo "Login in to Amazon ECR..."
