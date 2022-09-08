@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         #- name: clase3
-        - name: aws101
+        - name: clase3
           image: CONTAINER_IMAGE
           ports:
           - containerPort: 80
