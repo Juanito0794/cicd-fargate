@@ -15,7 +15,8 @@ spec:
         app:  clase3
     spec:
       containers:
-        - name: clase3
+        #- name: clase3
+        - name: aws101
           image: CONTAINER_IMAGE
           ports:
           - containerPort: 80
