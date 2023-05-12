@@ -9,13 +9,13 @@ phases:
         - TAG="$(date +%Y-%m-%d.%H.%M.%S).$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
         # Update Image tag in our Kubernetes Deployment Manifest        
         - echo "Update Image tag in kube-manifest..."
-        - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' YAML/deployment.yml
+        #- sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' YAML/deployment.yml
         # Verify AWS CLI Version        
         #- echo "Verify AWS CLI Version..."
         #- aws --version
         # Login to ECR Registry for docker to push the image to ECR Repository
         - echo "Login in to Amazon ECR..."
-        - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 523563128213.dkr.ecr.us-east-1.amazonaws.com
+        - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 344306482818.dkr.ecr.us-east-1.amazonaws.com
         #- $(aws ecr get-login --no-include-email --region us-east-2)
         # Update Kube config Home Directory
         - export KUBECONFIG=$HOME/.kube/config
@@ -34,9 +34,9 @@ phases:
       - docker push $REPOSITORY_URI:$TAG
       - echo "Docker Image Push to ECR Completed -  $REPOSITORY_URI:$TAG"
       # Setup kubectl with our EKS Cluster              
-      - echo "Update Kube Config"      
-      - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
+      #- echo "Update Kube Config"      
+      #- aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       # Apply changes to our Application using kubectl
-      - echo "Apply changes to kube manifests"            
-      - kubectl apply -f YAML/deployment.yml
-      - echo "Completed applying changes to Kubernetes Objects"  
+      #- echo "Apply changes to kube manifests"            
+      #- kubectl apply -f YAML/deployment.yml
+      #- echo "Completed applying changes to Kubernetes Objects"  
