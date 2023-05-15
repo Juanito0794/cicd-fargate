@@ -41,7 +41,7 @@ phases:
       #- echo "Apply changes to kube manifests"            
       #- kubectl apply -f YAML/deployment.yml
       #- echo "Completed applying changes to Kubernetes Objects" 
-      - printf '[{"cluster-demo-juan":"html-2",$REPOSITORY_URI:$TAG:"%s"}]' 344306482818.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_URI:$TAG > imagedefinitions.json
+      - printf '[{"name":"html-2","imageUri":"%s"}]' 344306482818.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_URI:$TAG > imagedefinitions.json
   artifacts:
     files: imagedefinitions.json
   
