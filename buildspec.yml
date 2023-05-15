@@ -20,13 +20,13 @@ phases:
         #- $(aws ecr get-login --no-include-email --region us-east-2)
         # Update Kube config Home Directory
         - export KUBECONFIG=$HOME/.kube/config
-        - export path=/home/ec2-user/.kube/config
+        #- export path=/home/ec2-user/.kube/config
   build:
     commands:
       # Build Docker Image
       - echo "Build started on 'date'"
       - echo "Building the Docker image..."
-      - docker build --tag $REPOSITORY_URI:$TAG .
+      - docker build --tag . $REPOSITORY_URI:$TAG 
   post_build:
     commands:
       # Push Docker Image to ECR Repository
