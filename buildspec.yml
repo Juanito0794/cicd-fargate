@@ -15,10 +15,11 @@ phases:
         #- aws --version
         # Login to ECR Registry for docker to push the image to ECR Repository
         - echo "Login in to Amazon ECR..."
-        - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 344306482818.dkr.ecr.us-east-1.amazonaws.com
+        #- aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 344306482818.dkr.ecr.us-east-1.amazonaws.com
+        - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y1n8y1c3
         #- $(aws ecr get-login --no-include-email --region us-east-2)
         # Update Kube config Home Directory
-        - export KUBECONFIG=$HOME/.kube/config
+        #- export KUBECONFIG=$HOME/.kube/config
         #- export path=/home/ec2-user/.kube/config
   build:
     commands:
