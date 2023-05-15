@@ -19,8 +19,8 @@ phases:
         - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y1n8y1c3
         #- $(aws ecr get-login --no-include-email --region us-east-2)
         # Update Kube config Home Directory
-        #- export KUBECONFIG=$HOME/.kube/config
-        #- export path=/home/ec2-user/.kube/config
+        - export KUBECONFIG=$HOME/.kube/config
+        - export path=/home/ec2-user/.kube/config
   build:
     commands:
       # Build Docker Image
