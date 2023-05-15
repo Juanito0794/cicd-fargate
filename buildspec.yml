@@ -3,6 +3,7 @@ phases:
   install:
     commands:
       - echo "Install Phase - Nothing to do using latest Amazon Linux Docker Image for CodeBuild which has all AWS Tools - https://github.com/aws/aws-codebuild-docker-images/blob/master/al2/x86_64/standard/3.0/Dockerfile"
+      - sudo yum update
       - sudo yum install docker
       - sudo systemctl enable docker.service
       - sudo systemctl start docker.service
